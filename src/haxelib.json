@@ -1,0 +1,12 @@
+{
+  "name": "raven",
+  "url": "http://github.com/ImaginationSydney/raven-hx",
+  "license": "MIT",
+  "tags": ["cross","analytics","error","reporting","sentry"],
+  "description": "A port of raven-js to Haxe. Provides cloud-based error reporting via the Sentry website.",
+  "version": "0.1.0",
+  "releasenote": "",
+  "contributors": ["tbyrne"],
+  "dependencies": {
+  }
+}
