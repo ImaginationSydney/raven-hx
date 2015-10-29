@@ -25,10 +25,11 @@ class Raven
 	private static var whitelistUrls:EReg;
 	private static var includePaths:EReg;
 	
+	public static var	globalUser:RavenUser;
+	
 	private static var	lastCapturedException;
 	private static var	lastEventId;
 	private static var	globalServer;
-	private static var	globalUser;
 	private static var	globalKey;
 	private static var	globalProject;
 	private static var startTime;
@@ -91,7 +92,7 @@ class Raven
 		}
 	}
 	
-	private static var STACK_PATTERN:EReg = ~/\t*at ([_\d\w\.]+)::([_\d\w]+)\$\/([_\d\w]+)\(\)\[(.+):(\d+)\]/;
+	private static var STACK_PATTERN:EReg = ~/\t*at ([_\d\w\.]+)::([_\d\w]+\$?)\/([_\d\w]+)\(\)\[(.+):(\d+)\]/;
 	/*
 	 * Manually capture an exception and send it over to Sentry
 	 *
@@ -288,7 +289,7 @@ class Raven
 		}
 
 		// Why??????????
-		if (data==null/* || isEmptyObject(data)*/) {
+		if (data==null || isEmptyObject(data)) {
 			return;
 		}
 

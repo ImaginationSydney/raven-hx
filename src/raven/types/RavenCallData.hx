@@ -6,6 +6,7 @@ package raven.types;
 
 typedef RavenCallData =
 {
+	?level:Int,
 	?project: String,
 	?logger: String,
 	?platform: String,
@@ -13,7 +14,7 @@ typedef RavenCallData =
 	?request: RavenHttp,
 	?release: String,
 	
-	?user: Map<String, String>,
+	?user: RavenUser,
 	?tags:Map<String, String>,
 	?extra:Map<String, String>,
 	
