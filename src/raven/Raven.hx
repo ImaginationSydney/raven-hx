@@ -347,6 +347,7 @@ class Raven
 				sentry_data:null
 			},
 			data: data,
+			attempts:3,
 			//options: globalOptions,
 			
 			onSuccess: function(res:String) {
@@ -383,25 +384,26 @@ class Raven
 		return obj.fields().length == 0;
 	}
 
-	private static function makeRequest(opts:Dynamic) {
+	private static function makeRequest(opts:RavenCall) {
 		// Tack on sentry_data to auth options, which get urlencoded
 		opts.auth.sentry_data = Json.stringify(opts.data);
 		
 		var src = opts.url + '?' + urlencode(opts.auth);
 		var http = new Http(src);
 		http.onData = opts.onSuccess;
-		http.onError = opts.onError;
+		http.onError = requestError.bind(_, opts);
 		http.request(false);
 
-		/*var img = newImage(),
-			src = opts.url + '?' + urlencode(opts.auth);
-
-		if (opts.options.crossOrigin || opts.options.crossOrigin === '') {
-			img.crossOrigin = opts.options.crossOrigin;
+	}
+	
+	static private function requestError(err:String, opts:RavenCall) 
+	{
+		if (opts.attempts == null || opts.attempts <= 1) {
+			opts.onError(err);
+		}else {
+			opts.attempts--;
+			makeRequest(opts);
 		}
-		img.onload = opts.onSuccess;
-		img.onerror = img.onabort = opts.onError;
-		img.src = src;*/
 	}
 	
 
