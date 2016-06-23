@@ -112,7 +112,7 @@ class Raven
 						lineno : Std.parseInt(STACK_PATTERN.matched(5)),
 						colno : 0
 					};
-					frame.setField("function", STACK_PATTERN.matched(1) + "." + STACK_PATTERN.matched(2) + "." + STACK_PATTERN.matched(3))+"()";
+					frame.setField("function", STACK_PATTERN.matched(1) + "." + STACK_PATTERN.matched(2) + "." + STACK_PATTERN.matched(3)+"()");
 					frames.push( frame );
 					
 				}
