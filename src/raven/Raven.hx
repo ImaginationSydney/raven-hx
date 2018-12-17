@@ -25,14 +25,14 @@ class Raven
 	private static var whitelistUrls:EReg;
 	private static var includePaths:EReg;
 	
-	public static var	globalUser:RavenUser;
+	public static var globalUser:RavenUser;
 	
-	private static var	lastCapturedException;
-	private static var	lastEventId;
-	private static var	globalServer;
-	private static var	globalKey;
-	private static var	globalProject;
-	private static var startTime;
+	private static var lastCapturedException:Dynamic;
+	private static var lastEventId:Dynamic;
+	private static var globalServer:Dynamic;
+	private static var globalKey:Dynamic;
+	private static var globalProject:Dynamic;
+	private static var startTime:Dynamic;
 	
 	
 	/*
