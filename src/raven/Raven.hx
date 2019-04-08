@@ -92,7 +92,8 @@ class Raven
 		}
 	}
 	
-	private static var STACK_PATTERN:EReg = ~/\t*at ([_\d\w\.]+)::([_\d\w]+\$?)\/([_\d\w]+)\(\)\[(.+):(\d+)\]/;
+	private static var STACK_PATTERN_1:EReg = ~/\t*at ([_\d\w\.]+)::([_\d\w]+\$?)\/([_\d\w]+)\(\)\[(.+):(\d+)\]/;   // air
+	private static var STACK_PATTERN_2:EReg = ~/\s*at ([_\d\w\.]+) \(file:\/\/\/(.*.*.*?):(\d+):(\d+)\)/;           // electron/chrome
 	/*
 	 * Manually capture an exception and send it over to Sentry
 	 *
@@ -106,13 +107,22 @@ class Raven
 		if (stack != null && stack.length > 0) {
 			var stackSplit = stack.split("\n");
 			for (line in stackSplit) {
-				if (STACK_PATTERN.match(line)) {
+				if (STACK_PATTERN_1.match(line)) {
 					var frame = {
-						filename : STACK_PATTERN.matched(4),
-						lineno : Std.parseInt(STACK_PATTERN.matched(5)),
+						filename : STACK_PATTERN_1.matched(4),
+						lineno : Std.parseInt(STACK_PATTERN_1.matched(5)),
 						colno : 0
 					};
-					frame.setField("function", STACK_PATTERN.matched(1) + "." + STACK_PATTERN.matched(2) + "." + STACK_PATTERN.matched(3)+"()");
+					frame.setField("function", STACK_PATTERN_1.matched(1) + "." + STACK_PATTERN_1.matched(2) + "." + STACK_PATTERN_1.matched(3)+"()");
+					frames.push( frame );
+					
+				}else if (STACK_PATTERN_2.match(line)) {
+					var frame = {
+						filename : STACK_PATTERN_2.matched(2),
+						lineno : Std.parseInt(STACK_PATTERN_2.matched(3)),
+						colno : 0
+					};
+					frame.setField("function", STACK_PATTERN_2.matched(1) + "()");
 					frames.push( frame );
 					
 				}
