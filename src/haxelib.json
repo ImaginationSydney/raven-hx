@@ -4,8 +4,8 @@
   "license": "MIT",
   "tags": ["cross","analytics","error","reporting","sentry"],
   "description": "A port of raven-js to Haxe. Provides cloud-based error reporting via the Sentry website.",
-  "version": "0.4.0",
-  "releasenote": "",
+  "version": "0.5.0",
+  "releasenote": "Added parsing for chromium formatted errors.",
   "contributors": ["tbyrne"],
   "dependencies": {
   }
